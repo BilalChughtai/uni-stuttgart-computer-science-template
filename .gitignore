@@ -6,12 +6,14 @@
 *.aux
 *.bak
 *.bbl
+*.bcf
 *.blg
 *.brf
 *.code
 *.css
 *.dvi
 *.err
+*.fls
 *.glo
 *.gls
 *.html
@@ -27,6 +29,7 @@
 *.lot
 *.out
 *.ps
+*.run.xml
 *.synctex
 *.synctex.gz
 *.thm

@@ -10,7 +10,7 @@
 % Styleguide:
 %
 % Ein sehr kleiner Styleguide. Packages werden in Blöcken organisiert.
-% Ein Block beginnt mit drei % in einer Zeile, dann % <Blocküberschrift>, dann 
+% Ein Block beginnt mit drei % in einer Zeile, dann % <Blocküberschrift>, dann
 % eine Liste der möglichen Optionen und deren Einstellungen, Gründe und Kommentare
 % eine % Zeile in der sonst nichts steht und dann wieder %%% in einer Zeile.
 %
@@ -24,8 +24,8 @@
 % Wir sind im 21 Jahrhundert, utf-8 löst so viele Probleme.
 %
 % Mit UTF-8 funktionieren folgende Pakete nicht mehr. Bitte beachten!
-%   * fancyvrb mit § 
-%   * easylist -> http://www.ctan.org/tex-archive/macros/latex/contrib/easylist/ 
+%   * fancyvrb mit §
+%   * easylist -> http://www.ctan.org/tex-archive/macros/latex/contrib/easylist/
 \usepackage[utf8]{inputenc}
 %
 %%%
@@ -79,7 +79,7 @@
 
 %%%
 % fancyheadings (nicht nur) fuer koma
-\usepackage[automark]{scrpage2} 
+\usepackage[automark]{scrpage2}
 %
 %%%
 
@@ -106,6 +106,10 @@
 % Intelligentes Leerzeichen um hinter Abkürzungen die richtigen Abstände zu erhalten, auch leere.
 % siehe commands.tex \gq{}
 \usepackage{xspace}
+%Macht \xspace und \enquote kompatibel
+\makeatletter
+\xspaceaddexceptions{\grqq \grq \csq@qclose@i \} }
+\makeatother
 %
 %%%
 
@@ -189,6 +193,15 @@ inkscape -z -D --file=\getgraphicspath#1.svg %
 % Links verhalten sich so, wie sie sollen
 \usepackage{url}
 %
+%Use text font as url font, not the monospaced one
+%see comments at http://tex.stackexchange.com/q/98463/9075
+\urlstyle{same}
+%
+%Hint by http://tex.stackexchange.com/a/10419/9075
+\makeatletter
+\g@addto@macro{\UrlBreaks}{\UrlOrds}
+\makeatother
+%
 %%%
 
 
@@ -201,17 +214,17 @@ inkscape -z -D --file=\getgraphicspath#1.svg %
 %%%
 %lustiger Hack fuer das Abkuerzungsverzeichnis
 %nach latex durchlauf folgendes ausfuehren
-%makeindex ausarbeitung.nlo -s nomencl.ist -o ausarbeitung.nls 
+%makeindex ausarbeitung.nlo -s nomencl.ist -o ausarbeitung.nls
 %danach nochmal latex
 %\usepackage{nomencl}
-%	\let\abk\nomenclature %Deutsche Ueberschrift setzen
-%	  	\renewcommand{\nomname}{List of Abbreviations}
-%		%Punkte zw. Abkuerzung und Erklaerung
-%	  	\setlength{\nomlabelwidth}{.2\hsize}
-%	  	\renewcommand{\nomlabel}[1]{#1 \dotfill}
-%		%Zeilenabstaende verkleinern
-%	  	\setlength{\nomitemsep}{-\parsep}
-%	\makenomenclature
+%    \let\abk\nomenclature %Deutsche Ueberschrift setzen
+%          \renewcommand{\nomname}{List of Abbreviations}
+%        %Punkte zw. Abkuerzung und Erklaerung
+%          \setlength{\nomlabelwidth}{.2\hsize}
+%          \renewcommand{\nomlabel}[1]{#1 \dotfill}
+%        %Zeilenabstaende verkleinern
+%          \setlength{\nomitemsep}{-\parsep}
+%    \makenomenclature
 %
 %%%
 
@@ -252,7 +265,7 @@ inkscape -z -D --file=\getgraphicspath#1.svg %
 %%%
 % Bildunterschriften bei floats genauso formatieren wie bei Listings
 % Anpassung wird unten bei den newfloat-Deklarationen vorgenommen
-% Caption2 vielleicht besser
+% https://www.ctan.org/pkg/caption2 is superseeded by this package.
 \usepackage{caption}
 %
 %%%
@@ -260,8 +273,8 @@ inkscape -z -D --file=\getgraphicspath#1.svg %
 
 %%%
 % Ermoeglicht es, Abbildungen um 90 Grad zu drehen
-% Alternatives Paket: rotating Allerdings wird hier nur das Bild gedreht, während bei lscape auch die PDF-Seite gedreht wird. 
-%Das Paket lscape dreht die Seite auch nicht 
+% Alternatives Paket: rotating Allerdings wird hier nur das Bild gedreht, während bei lscape auch die PDF-Seite gedreht wird.
+%Das Paket lscape dreht die Seite auch nicht
 \usepackage{pdflscape}
 %
 %%%
@@ -270,14 +283,12 @@ inkscape -z -D --file=\getgraphicspath#1.svg %
 %%%
 % Fuer listings
 % Wird für fancyvrb und für lstlistings verwendet
-% zustäzlich für den Paramter [H] = Floats WIRKLICH da wo sie deklariert wurden paltzieren - ganz ohne Kompromisse
-% floatrow ist der Nachfolger von float
-\iftex4ht
 \usepackage{float}
-\else
-%tex4ht is not compatible with the advanced floatrow package
-\usepackage{floatrow}
-\fi
+
+%\usepackage{floatrow}
+%% zustäzlich für den Paramter [H] = Floats WIRKLICH da wo sie deklariert wurden paltzieren - ganz ohne Kompromisse
+% floatrow ist der Nachfolger von float
+% Allerdings macht floatrow in manchen Konstellationen Probleme. Deshalb ist das Paket deaktiviert.
 %
 %%%
 
@@ -300,17 +311,17 @@ inkscape -z -D --file=\getgraphicspath#1.svg %
 
 %%%
 % Fußnoten
-% 
+%
 %\usepackage{dblfnote}  %Zweispaltige Fußnoten
 %
 % Keine hochgestellten Ziffern in der Fußnote (KOMA-Script-spezifisch):
-%\deffootnote[1.5em]{0pt}{1em}{\makebox[1.5em][l]{\bfseries\thefootnotemark}} 
+%\deffootnote[1.5em]{0pt}{1em}{\makebox[1.5em][l]{\bfseries\thefootnotemark}}
 %
 % Abstand zwischen Fußnoten vergrößern:
 %\setlength{\footnotesep}{.85\baselineskip}
 %
 %
-\renewcommand{\footnoterule}{}             % Keine Trennlinie zur Fußnote 
+\renewcommand{\footnoterule}{}             % Keine Trennlinie zur Fußnote
 \addtolength{\skip\footins}{\baselineskip} % Abstand Text <-> Fußnote
 % Fußnoten immer ganz unten auf einer \raggedbottom-Seite
 \usepackage{fnpos}
@@ -342,7 +353,7 @@ inkscape -z -D --file=\getgraphicspath#1.svg %
 
 %%%
 % Noch schoenere Tabellen als mit booktabs mit http://www.zvisionwelt.de/downloads.html
-\usepackage{booktabs} 
+\usepackage{booktabs}
 %
 %\usepackage[section]{placeins}
 %
@@ -379,10 +390,88 @@ inkscape -z -D --file=\getgraphicspath#1.svg %
 
 
 %%%
+%biblatex statt bibtex
+\usepackage[
+  backend       = biber, %minalphanames only works with biber backend
+  sortcites     = true,
+  bibstyle      = alphabetic,
+  citestyle     = alphabetic,
+  firstinits    = true,
+  useprefix     = false, %"von, van, etc." will be printed, too. See below.
+  minnames      = 1,
+  minalphanames = 3,
+  maxalphanames = 4,
+  maxbibnames   = 99,
+  maxcitenames  = 3,
+  doi           = false, %source: http://tex.stackexchange.com/a/23118/9075
+  isbn          = false, %source: http://tex.stackexchange.com/a/23118/9075
+  backref       = true]{biblatex}
+\bibliography{bibliography}
+
+%Do not put "vd" in the label, but put it at "\citeauthor"
+%Source: http://tex.stackexchange.com/a/30277/9075
+\makeatletter
+\AtBeginDocument{\toggletrue{blx@useprefix}}
+\AtBeginBibliography{\togglefalse{blx@useprefix}}
+
+%Thin spaces between initials
+%http://tex.stackexchange.com/a/11083/9075
+\renewrobustcmd*{\bibinitdelim}{\,}
+
+%Keep first and last name together in the bibliography
+%http://tex.stackexchange.com/a/196192/9075
+\renewcommand*\bibnamedelimc{\addnbspace}
+\renewcommand*\bibnamedelimd{\addnbspace}
+
+%Replace last "and" by comma in bibliography
+%See http://tex.stackexchange.com/a/41532/9075
+\AtBeginBibliography{%
+  \renewcommand*{\finalnamedelim}{\addcomma\space}%
+}
+
+\DefineBibliographyStrings{ngerman}{
+  backrefpage  = {zitiert auf S\adddot},
+  backrefpages = {zitiert auf S\adddot},
+  andothers    = {et\ \addabbrvspace al\adddot},
+  %Tipp von http://www.mrunix.de/forums/showthread.php?64665-biblatex-Kann-%DCberschrift-vom-Inhaltsverzeichnis-nicht-%E4ndern&p=293656&viewfull=1#post293656
+  bibliography = {Literaturverzeichnis}
+}
+
+%enable hyperlinked author names when using \citeauthor
+%source: http://tex.stackexchange.com/a/75916/9075
+\DeclareCiteCommand{\citeauthor}
+  {\boolfalse{citetracker}%
+   \boolfalse{pagetracker}%
+   \usebibmacro{prenote}}
+  {\ifciteindex
+     {\indexnames{labelname}}
+     {}%
+   \printtext[bibhyperref]{\printnames{labelname}}}
+  {\multicitedelim}
+  {\usebibmacro{postnote}}
+
+%natbib compatibility
+\newcommand{\citep}[1]{\cite{#1}}
+\newcommand{\citet}[1]{\citeauthor{#1} \cite{#1}}
+%Beginning of sentence - analogous to cleveref - important for names such as "zur Muehlen"
+\newcommand{\Citep}[1]{\cite{#1}}
+\newcommand{\Citet}[1]{\Citeauthor{#1} \cite{#1}}
+%%%
+
+
+%%%
+% Blindtext. Paket "blindtext" ist fortgeschritterner als "lipsum" und kann auch Mathematik im Text (http://texblog.org/2011/02/26/generating-dummy-textblindtext-with-latex-for-testing/)
+% kantlipsum (https://www.ctan.org/tex-archive/macros/latex/contrib/kantlipsum) ist auch ganz nett, aber eben auch keine Mathematik
+% Wird verwendet, um etwas Text zu erzeugen, um eine volle Seite wegen Layout zu sehen.
+\usepackage[math]{blindtext}
+%%%
+
+
+%%%
 % Neue Pakete bitte VOR hyperref einbinden. Insbesondere bei Verwendung des
 % Pakets "index" wichtig, da sonst die Referenzierung nicht funktioniert.
 % Für die Indizierung selbst ist unter http://xindy.sourceforge.net
-% ein gutes Tool zu erhalten 
+% ein gutes Tool zu erhalten
 %%%
 
 
@@ -407,19 +496,19 @@ inkscape -z -D --file=\getgraphicspath#1.svg %
 \definecolor{black}{rgb}{0,0,0}
 
 \hypersetup{
-	breaklinks=true,
-	bookmarksnumbered=true,
-	bookmarksopen=true,
-	bookmarksopenlevel=1,
-	breaklinks=true,
-	colorlinks=true,
-	pdfstartview=Fit,
-	pdfpagelayout=SinglePage,
-	%
-	filecolor=darkblue,
-	urlcolor=darkblue,
-	linkcolor=black,
-	citecolor=black
+    breaklinks=true,
+    bookmarksnumbered=true,
+    bookmarksopen=true,
+    bookmarksopenlevel=1,
+    breaklinks=true,
+    colorlinks=true,
+    pdfstartview=Fit,
+    pdfpagelayout=SinglePage,
+    %
+    filecolor=darkblue,
+    urlcolor=darkblue,
+    linkcolor=black,
+    citecolor=black
 }
 %
 %%%
@@ -429,6 +518,7 @@ inkscape -z -D --file=\getgraphicspath#1.svg %
 % cleveref für cref statt autoref, da cleveref auch bei Definitionen funktioniert
 \ifdeutsch
 \usepackage[ngerman,capitalise,nameinlink]{cleveref}
+\crefname{figure}{Abbildung}{Abbildungen}
 \else
 \usepackage[capitalise,nameinlink]{cleveref}
 \fi
@@ -438,7 +528,7 @@ inkscape -z -D --file=\getgraphicspath#1.svg %
 %%%
 % Zur Darstellung von Algorithmen
 % Algorithm muss nach hyperref geladen werden
-\usepackage[chapter]{algorithm} 
+\usepackage[chapter]{algorithm}
 \usepackage[]{algpseudocode}
 %
 %%%
@@ -464,27 +554,27 @@ inkscape -z -D --file=\getgraphicspath#1.svg %
 %
 % für englische Ausarbeitungen "language=english" benutzen
 \usepackage[
-	title={Förderungswürdigkeit der F\"{o}rderung von Öl},
-	author={Lars K.},
-	type=bachelor,
-	institute=iaas,
-	number=12345,
-	course=se,
-	examiner={Prof.\ Dr.\ Uwe Fessor},
-	supervisor={Dipl.-Inf.\ Roman Tiker,\\Dipl.-Inf.\ Laura Stern},
-	startdate={5.\ Juli 2013}, % English: July 5, 2013;    ISO: 2013-07-05
-	enddate={5.\ Januar 2014}, % English: January 5, 2014; ISO: 2014-01-05
-	crk={I.7.2},
-	language=german
-	%language=english
-	]{uni-stuttgart-cs-cover/uni-stuttgart-cs-cover}
+    title={Förderungswürdigkeit der F\"{o}rderung von Öl},
+    author={Lars K.},
+    type=bachelor,
+    institute=iaas,
+    number=12345,
+    course=se,
+    examiner={Prof.\ Dr.\ Uwe Fessor},
+    supervisor={Dipl.-Inf.\ Roman Tiker,\\Dipl.-Inf.\ Laura Stern,\\Otto Normalverbraucher,\ M.Sc.},
+    startdate={5.\ Juli 2013}, % English: July 5, 2013;    ISO: 2013-07-05
+    enddate={5.\ Januar 2014}, % English: January 5, 2014; ISO: 2014-01-05
+    crk={I.7.2},
+    language=german
+    %language=english
+    ]{uni-stuttgart-cs-cover}
 %
 %%%
 
 
 %%%
 %Bugfixes packages
-\usepackage{fixltx2e} %Bereinigt einige Ungereimtheiten, die auf Grund von Rueckwaertskompatibilitaet beibahlten wurden.
+%\usepackage{fixltx2e} %Fuer neueste LaTeX-Installationen nicht mehr benoetigt - bereinigte einige Ungereimtheiten, die auf Grund von Rueckwaertskompatibilitaet beibahlten wurden.
 %\usepackage{mparhack} %Fixt die Position von marginpars (die in DAs selten bis gar nicht gebraucht werden}
 %\usepackage{ellipsis} %Fixt die Abstaende vor \ldots. Wird wohl auch nicht benoetigt.
 %
@@ -499,15 +589,26 @@ inkscape -z -D --file=\getgraphicspath#1.svg %
 
 
 %%%
-% Optionen                                                                  
+% Optionen
 %
-%Skip=0 funktioniert nicht
-\captionsetup{format=hang,labelfont=bf,justification=justified,singlelinecheck=false,skip=0pt}
+\captionsetup{
+  format=hang,
+  labelfont=bf,
+  justification=justified,
+  %single line captions should be centered, multiline captions justified
+  singlelinecheck=true
+}
 %
 %neue float Umgebung fuer Listings, die mittels fancyvrb gesetzt werden sollen
 \floatstyle{ruled}
 \newfloat{Listing}{tbp}{code}[chapter]
+\crefname{Listing}{Listing}{Listings}
 \newfloat{Algorithmus}{tbp}{alg}[chapter]
+\ifdeutsch
+\crefname{Algorithmus}{Algorithmus}{Algorithmus}
+\else
+\crefname{Algorithmus}{Algorithm}{Algorithms}
+\fi
 %
 %amsmath
 %\numberwithin{equation}{section}
@@ -552,7 +653,7 @@ inkscape -z -D --file=\getgraphicspath#1.svg %
         extendedchars=true,
         basicstyle=\footnotesize\ttfamily,
         commentstyle=\slshape,
-        stringstyle=\ttfamily, %Original: \rmfamily, damit werden die Strings im Quellcode hervorgehoben		zusaetzlich evtl.: \scshape oder \rmfamily durch \ttfamily ersetzen. Dann sieht's aus, wie bei fancyvrb
+        stringstyle=\ttfamily, %Original: \rmfamily, damit werden die Strings im Quellcode hervorgehoben. Zusaetzlich evtl.: \scshape oder \rmfamily durch \ttfamily ersetzen. Dann sieht's aus, wie bei fancyvrb
         breaklines=true,
         breakatwhitespace=true,
         columns=flexible,
@@ -578,7 +679,7 @@ inkscape -z -D --file=\getgraphicspath#1.svg %
 
 
 %%%
-% Das Euro Zeichen 
+% Das Euro Zeichen
 % Fuer Palatino (mathpazo.sty): richtiges Euro-Zeichen
 % Alternative: \usepackage{eurosym}
 \newcommand{\EUR}{\ppleuro}
@@ -608,40 +709,29 @@ inkscape -z -D --file=\getgraphicspath#1.svg %
 %
 %%%
 
+
+%%%
+%ensure that floats covering a whole page are placed at the top of the page
+%see http://tex.stackexchange.com/a/28565/9075
+\makeatletter
+\setlength{\@fptop}{0pt}
+\setlength{\@fpbot}{0pt plus 1fil}
+\makeatother
+%%%
+
+
 %%%
 %Optischer Randausgleich
 \usepackage{microtype}
 %%%
 
 %%%
-% Rueckverweise aus dem Literaturverzeichnis
-\usepackage[hyperpageref]{backref}
-\ifdeutsch
-% Deutscher Text
-\newcommand{\babelbackrefnotcited}{\relax}
-\newcommand{\babelbackrefcitedsingle}[1]{(Zitiert auf Seite~#1)}
-\newcommand{\babelbackrefcitedmulti}[1]{(Zitiert auf den Seiten~#1)}
-\newcommand{\babelbackrefand}{und}
-\else
-% Englischer Text
-\newcommand{\babelbackrefnotcited}{\relax}
-\newcommand{\babelbackrefcitedsingle}[1]{(Cited on page~#1)}
-\newcommand{\babelbackrefcitedmulti}[1]{(Cited on pages~#1)}
-\newcommand{\babelbackrefand}{and}
-\fi
-% Tweak backref
-\renewcommand{\backreftwosep}{ \babelbackrefand~} % seperate 2 pages
-\renewcommand{\backreflastsep}{ \babelbackrefand~} % seperate last of longer list
-\renewcommand*{\backref}[1]{} % Standard deaktivieren
-\renewcommand*{\backrefalt}[4]{% 
-\ifcase #1 %
-\babelbackrefnotcited%
-\or
-\babelbackrefcitedsingle{#2}%
-\else
-\babelbackrefcitedmulti{#2}%
-\fi}
+%Package geometry to enlarge on page
 %
+%Source: http://www.howtotex.com/tips-tricks/change-margins-of-a-single-page/
+%
+%Normally, this should not be used as the typearea package calculates the margins perfectly
+\usepackage[
+  pass %just load the package and do not destory the work of typearea
+]{geometry}
 %%%
-
-
